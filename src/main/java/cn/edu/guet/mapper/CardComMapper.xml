@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.guet.mapper.CardComMapper">
+    <select id="getAllCardCom" resultType="cardtype">
+		SELECT cardid,cardname,commoney,recharmoney,discount FROM cardtype
+	</select>
+
+	<select id="getCardComByName" resultType="cardtype">
+		SELECT cardid,cardname,commoney,recharmoney,discount FROM cardtype WHERE cardname=#{cardName}
+	</select>
+
+    <select id="getAllCardtype" resultType="cardtype">
+		SELECT cardname FROM cardtype
+	</select>
+
+	<update id="updateCardCom" parameterType="cardtype">
+   		update cardtype set commoney=#{comMoney} WHERE cardid=#{cardId}
+	</update>
+
+	<update id="updateQingkong" parameterType="string">
+   		update cardtype set commoney=0 WHERE cardid=#{cardId}
+	</update>
+</mapper>

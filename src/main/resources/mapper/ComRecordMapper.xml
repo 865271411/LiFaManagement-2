@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.guet.mapper.ComRecordMapper">
+    <resultMap id="RecordResultMap" type="ConRecord">
+        <id column="id" property="id"></id>
+        <result column="serviceid" property="serviceId"></result>
+        <result column="empid" property="empId"></result>
+        <result column="vipid" property="vipId"></result>
+        <result column="consumetime" property="consumeTime"></result>
+        <result column="operator" property="operator"></result>
+    </resultMap>
+    <select id="getVipId" resultType="string">
+		SELECT vipid FROM vip WHERE phone=#{phone}
+	</select>
+
+    <select id="getVipId1" resultType="string">
+		SELECT vipid FROM vip WHERE vipname=#{vipName}
+	</select>
+
+    <select id="getServiceId" resultType="string">
+		SELECT serviceid FROM servicetype WHERE servicename=#{serviceName}
+	</select>
+
+    <select id="getEmpId" resultType="string">
+		SELECT empid FROM emp WHERE empname=#{empName}
+	</select>
+
+    <insert id="insertCom" parameterType="cn.edu.guet.model.ConRecord">
+        INSERT INTO consume values(#{id},#{serviceId},#{empId},#{vipId},#{consumeTime},#{operator})
+    </insert>
+
+</mapper>

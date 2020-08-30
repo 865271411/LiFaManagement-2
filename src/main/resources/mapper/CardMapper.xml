@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.guet.mapper.CardMapper">
+
+	
+	<select id="getAllCardType" resultType="card">
+		SELECT * FROM cardtype
+	</select>
+
+	<select id="saveCardType" parameterType="card">
+		INSERT INTO cardtype VALUES (#{cardId},#{cardName},#{comMoney},#{recharMoney},#{discount})
+	</select>
+
+	<select id="deleteCardType" parameterType="String">
+		DELETE FROM cardtype WHERE cardid=#{cardId}
+	</select>
+
+
+	<select id="updateCardType" parameterType="cn.edu.guet.model.Card">
+		UPDATE cardtype SET cardname=#{cardName},commoney=#{comMoney},recharmoney=#{recharMoney},discount=#{discount} WHERE cardid=#{cardId}
+	</select>
+
+
+</mapper>

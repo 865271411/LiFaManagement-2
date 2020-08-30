@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.guet.mapper.VipMapper">
+	<resultMap id="getVipMessage" type="vip">
+		<id property="phone" column="PHONE"></id>
+		<result property="vipId" column="VIPID"></result>
+		<result property="vipName" column="VIPNAME"></result>
+		<result property="cardId" column="CARDID"></result>
+		<result property="cardMoney" column="CARDMONEY"></result>
+		<result property="consumeMoney" column="CONSUMMONEY"></result>
+		<result property="empId" column="EMPID"></result>
+	</resultMap>
+	<select id="getVipByTel" resultMap="getVipMessage">
+        SELECT * FROM vip WHERE phone=#{phone}
+    </select>
+	<select id="getAllVip" resultMap="getVipMessage">
+        SELECT * FROM vip
+    </select>
+
+</mapper>

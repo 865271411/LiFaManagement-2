@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.guet.mapper.AddEmpMapper">
+
+
+    <resultMap id="getEmp" type="emp">
+        <id property="empId" column="EMPID"/>
+        <result property="empName" column="EMPNAME"/>
+        <result property="sex" column="SEX"/>
+        <result property="empLevel" column="EMPLEVEL"/>
+        <result property="phone" column="PHONE"/>
+        <result property="birth" column="BIRTH" />
+        <result property="hireDate" column="HIREDATE" />
+    </resultMap>
+    <select id="getAllEmp" resultMap="getEmp">
+		SELECT * FROM emp
+	</select>
+    <select id="getSoloEmp" resultMap="getEmp">
+		SELECT * FROM emp WHERE empid=#{empId}
+	</select>
+    <insert id="insertEmp" parameterType="emp">
+        INSERT INTO emp VALUES(#{empId},#{empName},#{empLevel},#{phone},to_date(#{birth},'yyyy-mm-dd'),to_date(#{hireDate},'yyyy-mm-dd'),#{sex})
+    </insert>
+    <delete id="deleteEmp" parameterType="string">
+        DELETE FROM emp WHERE empid=#{empId}
+    </delete>
+    <update id="updateEmp" parameterType="emp">
+        UPDATE emp <trim prefix="set" suffixOverrides=",">
+        <if test="empName!=null">empname=#{empName},</if>
+        <if test="empLevel!=null">emplevel=#{empLevel},</if>
+        <if test="phone!=null">phone=#{phone},</if>
+        <if test="birth!=null">birth=to_date(#{birth},'yyyy-mm-dd'),</if>
+        <if test="hireDate!=null">hiredate=to_date(#{hireDate},'yyyy-mm-dd'),</if>
+        <if test="sex!=null">sex=#{sex},</if>
+    </trim>
+        WHERE empid=#{empId}
+    </update>
+</mapper>

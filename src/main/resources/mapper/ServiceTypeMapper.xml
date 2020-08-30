@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.guet.mapper.ServiceTypeMapper">
+
+	<select id="selectServiceType" resultType="servicetype">
+		SELECT serviceid,servicename,price,stype,state FROM servicetype WHERE servicename like '%${serviceName}%'
+	</select>
+	<insert id="saveServiceType" parameterType="cn.edu.guet.dt.ServiceTypeDto">
+		INSERT INTO servicetype(serviceid,servicename,price,stype,state) VALUES (#{serviceId},#{serviceName},#{price},#{stype},#{state})
+	</insert>
+	<select id="getAllServiceType" resultType="servicetype">
+		SELECT * FROM servicetype WHERE state='上架'
+	</select>
+	<update id="updateServiceType" parameterType="servicetype">
+		UPDATE servicetype SET servicename=#{serviceName},price=#{price},stype=#{stype} WHERE serviceid=#{serviceId}
+	</update>
+	<update id="deleteServiceType" parameterType="string">
+		UPDATE servicetype SET state='已下架' WHERE serviceid=#{serviceId}
+	</update>
+
+	<select id="getAllStype" resultType="servicetype">
+		SELECT stype FROM servicetype group by stype
+	</select>
+	<select id="searchStypeService" resultType="servicetype">
+		SELECT * FROM servicetype WHERE stype=#{stype}
+	</select>
+	<select id="getStateService" resultType="servicetype">
+		SELECT * FROM servicetype WHERE state=#{state}
+	</select>
+	<select id="getAllServiceName" resultType="string">
+		SELECT servicename FROM servicetype
+	</select>
+</mapper>

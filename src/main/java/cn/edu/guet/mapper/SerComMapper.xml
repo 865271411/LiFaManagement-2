@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.guet.mapper.SerComMapper">
+	<resultMap id="servicemap" type="servicetype">
+		<id property="serviceId" column="serviceid"></id>
+		<result property="serviceName" column="servicename"></result>
+		<result property="comMoney" column="commoney"></result>
+	</resultMap>
+    <select id="getAllSerCom" resultType="servicetype">
+		SELECT serviceid,servicename,commoney,price,stype,state FROM servicetype
+	</select>
+
+	<select id="getSerComByStype" resultType="servicetype">
+		SELECT serviceid,servicename,commoney,price,stype,state FROM servicetype where stype=#{stype}
+	</select>
+
+	<select id="getSerComByState" resultType="servicetype">
+		SELECT serviceid,servicename,commoney,price,stype,state FROM servicetype where state=#{state}
+	</select>
+
+    <select id="getSerComByName" resultType="servicetype">
+		SELECT serviceid,servicename,commoney,price,stype,state FROM servicetype where servicename=#{serviceName}
+	</select>
+
+	<update id="updateSerCom" parameterType="cn.edu.guet.model.Servicetype">
+   		update servicetype set commoney=#{comMoney} WHERE serviceid=#{serviceId}
+	</update>
+
+	<update id="updateQingkong" parameterType="cn.edu.guet.model.Servicetype">
+   		update servicetype set commoney=0 WHERE serviceid=#{serviceId}
+	</update>
+
+	<update id="updateQingkongg" parameterType="string">
+   		update servicetype set commoney=0 WHERE serviceid=#{serviceId}
+	</update>
+
+	<select id="getAllState" resultType="servicetype">
+		SELECT state FROM servicetype group by state
+	</select>
+
+	<select id="getAllStype" resultType="servicetype">
+		SELECT stype FROM servicetype group by stype
+	</select>
+
+	<select id="getAllSerName1" resultType="servicetype">
+		SELECT serviceid,servicename,price FROM servicetype
+	</select>
+
+	<select id="getAllSerName" resultType="servicetype">
+		SELECT serviceid FROM servicetype
+	</select>
+
+	<update id="updateSerComm" parameterType="servicetype">
+   		update servicetype set commoney=#{comMoney} WHERE serviceid=#{serviceId}
+	</update>
+
+</mapper>

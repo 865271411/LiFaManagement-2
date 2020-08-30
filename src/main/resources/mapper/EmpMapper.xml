@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.guet.mapper.EmpMapper">
+
+    <select id="getSerComByName" resultType="servicetype">
+		SELECT serviceid,servicename,commoney,price,stype,state FROM servicetype where servicename=#{serviceName}
+	</select>
+
+
+    <select id="getAllEmp" resultType="emp">
+		SELECT empid,empname,emplevel FROM emp
+	</select>
+
+    <select id="getAllEmpName" resultType="emp">
+		SELECT empname FROM emp
+	</select>
+
+</mapper>

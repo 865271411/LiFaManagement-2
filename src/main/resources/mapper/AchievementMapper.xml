@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.guet.mapper.AchievementMapper">
+<!--    <select id="getAchievement" resultType="cn.edu.guet.dt.EmpAchievementDto" parameterType="String">-->
+<!--		SELECT e.empid,e.emplevel,SUM(PRICE) AS servieceAchievement FROM consume c,servicetype s,emp e WHERE c.serviceid=s.serviceid AND c.empid=e.empid AND vipid != '100000' AND e.empid=#{value} Group by e.empid,e.emplevel ORDER BY e.empid ASC-->
+<!--	</select>-->
+
+<!--    <select id="getSankeAchievement" resultType="cn.edu.guet.dt.EmpAchievementDto" parameterType="String">-->
+<!--		SELECT e.empid,e.emplevel,SUM(PRICE) AS sankeAchievement FROM consume c,servicetype s,emp e WHERE c.serviceid=s.serviceid  AND c.empid=e.empid AND vipid='100000' AND e.empid=#{value} Group by e.empid,e.emplevel ORDER BY e.empid ASC-->
+<!--	</select>-->
+
+<!--    <select id="getKaikaAchievement" resultType="cn.edu.guet.dt.EmpAchievementDto" parameterType="String">-->
+<!--	    SELECT e.empid,e.emplevel,sum(RECHARMONEY) AS KaikaAchievement FROM vip v,cardtype c,emp e WHERE v.cardid=c.cardid AND v.empid=e.empid AND e.empid=#{value} Group by e.empid,e.emplevel ORDER BY e.empid ASC-->
+<!--	</select>-->
+
+
+<!--	2020-08-20=>between 2020-08-20 and 2020-08-21
+SELECT to_char(consumetime,'yyyy-mm-dd'),SUM(PRICE) AS sankeAchievement FROM consume c,servicetype s,emp e WHERE c.serviceid=s.serviceid  AND c.empid=e.empid AND e.empid='E002' AND consumetime BETWEEN  DATE '2020-08-19' AND DATE '2020-08-23' Group by to_char(consumetime,'yyyy-mm-dd');
+SELECT trunc(consumetime),e.empid,e.emplevel,SUM(PRICE) AS totalAchievement FROM consume c,servicetype s,emp e WHERE c.serviceid=s.serviceid  AND c.empid=e.empid AND e.empid='E002' AND consumetime BETWEEN DATE '2020-08-20' AND DATE '2020-08-21' Group by trunc(consumetime),e.empid,e.emplevel;-->
+
+	<select id="getTotalAchievement" resultType="cn.edu.guet.dt.EmpAchievementDto" parameterType="cn.edu.guet.dt.EmpAcheByDate">
+		SELECT trunc(consumetime),e.empid,e.emplevel,SUM(PRICE) AS totalAchievement FROM consume c,servicetype s,emp e WHERE c.serviceid=s.serviceid  AND c.empid=e.empid AND e.empid=#{empId} AND consumetime BETWEEN  #{consumetime} AND  #{nextConsumetime} Group by trunc(consumetime),e.empid,e.emplevel ORDER BY trunc(consumetime)
+	</select>
+
+	<select id="getKaikaAchievementByDate" resultType="cn.edu.guet.dt.EmpAchievementDto" parameterType="cn.edu.guet.dt.EmpAcheByDate">
+	    SELECT trunc(CARDTIME),e.empid,e.emplevel,sum(RECHARMONEY) AS KaikaAchievement FROM vip v,cardtype c,emp e WHERE v.cardid=c.cardid AND v.empid=e.empid AND e.empid=#{empId} AND CARDTIME BETWEEN  #{consumetime} AND  #{nextConsumetime} Group by trunc(CARDTIME),e.empid,e.emplevel ORDER BY trunc(CARDTIME)
+	</select>
+
+	<select id="getAllConsumeTime" resultType="cn.edu.guet.dt.EmpAcheByDate">
+		SELECT DISTINCT trunc(consumetime) AS consumetime,trunc(consumetime+1) AS nextConsumetime FROM consume ORDER BY trunc(consumetime)
+	</select>
+
+<!--	<select id="getAllNextConsumeTime" resultType="cn.edu.guet.dt.EmpAcheByDate">-->
+<!--		SELECT DISTINCT trunc(consumetime+1) AS nextConsumetime FROM consume-->
+<!--	</select>-->
+
+</mapper>

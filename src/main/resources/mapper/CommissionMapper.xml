@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.guet.mapper.CommissionMapper">
+<!--    <select id="getCommoney" resultType="cn.edu.guet.dt.EmpCommDto">-->
+<!--		SELECT c.EMPID,EMPNAME,SUM(COMMONEY) AS servieceCommoney FROM consume c,servicetype s,emp e WHERE c.serviceid=s.serviceid AND c.empId=e.empid AND vipid != '100000' GROUP BY c.EMPID,EMPNAME-->
+<!--	</select>-->
+
+<!--    <select id="getSankeCommoney" resultType="cn.edu.guet.dt.EmpCommDto">-->
+<!--		SELECT c.EMPID,EMPNAME,SUM(COMMONEY) AS sankeCommoney FROM consume c,servicetype s,emp e WHERE c.serviceid=s.serviceid AND c.empId=e.empid AND vipid='100000' GROUP BY c.EMPID,EMPNAME-->
+<!--	</select>-->
+
+<!--    <select id="getKaikaCommoney" resultType="cn.edu.guet.dt.EmpCommDto">-->
+<!--	    SELECT e.empid,empname,sum(commoney) AS KaikaCommoney FROM vip v,cardtype c,emp e where v.cardid=c.cardid and e.empid=v.empid Group by e.empid,e.empname-->
+<!--	</select>-->
+
+
+    <select id="getCommoneyByDate" resultType="cn.edu.guet.dt.EmpCommDto" parameterType="cn.edu.guet.dt.EmpComByDate">
+		SELECT e.empid,e.emplevel,SUM(COMMONEY) AS servieceCommoney FROM consume c,servicetype s,emp e WHERE c.serviceid=s.serviceid AND c.empid=e.empid AND vipid != '100000' AND e.empid=#{empId} AND consumetime BETWEEN  #{startDate} AND #{endDate} Group by e.empid,e.emplevel
+	</select>
+
+    <select id="getSankeCommoneyByDate" resultType="cn.edu.guet.dt.EmpCommDto" parameterType="cn.edu.guet.dt.EmpComByDate">
+		SELECT e.empid,e.emplevel,SUM(COMMONEY) AS sankeCommoney FROM consume c,servicetype s,emp e WHERE c.serviceid=s.serviceid  AND c.empid=e.empid AND vipid='100000' AND e.empid=#{empId} AND consumetime BETWEEN  #{startDate} AND  #{endDate} Group by e.empid,e.emplevel
+	</select>
+
+    <select id="getKaikaCommoneyByDate" resultType="cn.edu.guet.dt.EmpCommDto" parameterType="cn.edu.guet.dt.EmpComByDate">
+	    SELECT e.empid,e.emplevel,sum(commoney) AS KaikaCommoney FROM vip v,cardtype c,emp e WHERE v.cardid=c.cardid AND v.empid=e.empid AND e.empid=#{empId} AND cardtime BETWEEN #{startDate} AND #{endDate} Group by e.empid,e.emplevel
+	</select>
+
+
+	<select id="getCommoney" resultType="cn.edu.guet.dt.EmpCommDto" parameterType="string">
+		SELECT e.empid,e.emplevel,SUM(COMMONEY) AS servieceCommoney FROM consume c,servicetype s,emp e WHERE c.serviceid=s.serviceid AND c.empid=e.empid AND vipid != '100000' AND e.empid=#{empId} Group by e.empid,e.emplevel
+	</select>
+
+	<select id="getSankeCommoney" resultType="cn.edu.guet.dt.EmpCommDto" parameterType="string">
+		SELECT e.empid,e.emplevel,SUM(COMMONEY) AS sankeCommoney FROM consume c,servicetype s,emp e WHERE c.serviceid=s.serviceid  AND c.empid=e.empid AND vipid='100000' AND e.empid=#{empId} Group by e.empid,e.emplevel
+	</select>
+
+	<select id="getKaikaCommoney" resultType="cn.edu.guet.dt.EmpCommDto" parameterType="string">
+	    SELECT e.empid,e.emplevel,sum(commoney) AS KaikaCommoney FROM vip v,cardtype c,emp e WHERE v.cardid=c.cardid AND v.empid=e.empid AND e.empid=#{empId} Group by e.empid,e.emplevel
+	</select>
+
+
+
+    <select id="getAllEmp" resultType="emp" >
+        SELECT  * FROM emp
+    </select>
+
+    <select id="getEmpCommById" resultType="cn.edu.guet.model.Emp" parameterType="String">
+	    SELECT * FROM emp  WHERE empid=#{empid}
+	</select>
+
+	<!--select * from consume where consumetime between date '2020-08-20' and date '2020-08-21';
+	 SELECT e.empid,e.emplevel,SUM(COMMONEY) AS servieceCommoney FROM consume c,servicetype s,emp e WHERE c.serviceid=s.serviceid AND c.empid=e.empid AND vipid = '100000' AND e.empid='E002' Group by e.empid,e.emplevel;-->
+
+    <!--    <resultMap id="vipConsumeMap" type="consume">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <result column="consumeTime" property="consumeTime"/>-->
+<!--        <result column="operator" property="operator"/>-->
+
+<!--        <association property="vip" resultMap="vipConMap"/>-->
+<!--        <association property="emp" resultMap="empConMap"/>-->
+<!--        <association property="servicetype" resultMap="servicrConMap"/>-->
+<!--    </resultMap>-->
+
+<!--    <resultMap id="vipConMap" type="vip">-->
+<!--        <id column="VIPID" property="vipId"></id>-->
+<!--        <result column="VIPNAME" property="vipName"/>-->
+<!--        <result column="PHONE" property="phone"/>-->
+<!--    </resultMap>-->
+
+<!--    <resultMap id="empConMap" type="emp">-->
+<!--        <id column="EMPID" property="empId"></id>-->
+<!--        <result column="EMPNAME" property="empName"/>-->
+<!--    </resultMap>-->
+
+<!--    <resultMap id="servicrConMap" type="servicetype">-->
+<!--        <id column="SERVICEID" property="serviceId"></id>-->
+<!--        <result column="SERVICENAME" property="serviceName"/>-->
+<!--    </resultMap>-->
+
+<!--    <select id="getAllConsume" resultMap="vipConsumeMap" >-->
+<!--        SELECT  * FROM consume c,vip v,emp e,servicetype s WHERE c.vipid=v.vipid AND c.empid=e.empid AND c.serviceid=s.serviceid-->
+<!--    </select>-->
+</mapper>
